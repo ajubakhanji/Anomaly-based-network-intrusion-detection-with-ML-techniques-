@@ -76,7 +76,7 @@ pred = DT.fit(X_train, Y_train).predict(X_test)
 
 
 
-# The following commented block includes a citation of the following confusion matrix plotting function, citation may also be found in Thesis bibliography[15].
+# The following commented block includes a citation of the following confusion matrix plotting function.
 ################################################
 # ""Title: def_confusion_matrix/intrusion detection Jupyter notebook,
 #   Author: Radwan Diab,
