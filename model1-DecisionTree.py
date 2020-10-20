@@ -61,7 +61,6 @@ X = data.copy().drop(['Result'], axis=1)
 y = data['Result']
 
 # Model selection:
-# After 3 runs,i found test size 10% here to be optimal for model accuracy.
 
 X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size=0.1, random_state=42)
 
@@ -76,7 +75,6 @@ pred = DT.fit(X_train, Y_train).predict(X_test)
 
 
 
-# The following commented block includes a citation of the following confusion matrix plotting function.
 ################################################
 # ""Title: def_confusion_matrix/intrusion detection Jupyter notebook,
 #   Author: Radwan Diab,
