@@ -63,7 +63,6 @@ X = data.copy().drop(['Result'], axis=1)
 y = data['Result']
 
 # Data splitting
-# After 3 runs,i found test size 10% here to be optimal for model accuracy.
 X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size=0.1, random_state=42)
 
 # Standard scaler applied to training data then training and testing are standardized with scaler
@@ -76,7 +75,6 @@ X_test = scaler.transform(X_test)
 G = GaussianNB().fit(X_train, Y_train)
 pred = G.predict(X_test)
 
-# The following commented block includes a citation of the confusion matrix plotting function. 
 ################################################
 # ""Title: def_confusion_matrix/intrusion detection Jupyter notebook,
 #   Author: Radwan Diab,
@@ -106,7 +104,6 @@ def plot_confusion_matrix(cm, classes,
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
 
-# Model performance/ error analysis
 ###################################################
 CM = confusion_matrix(Y_test, pred)
 plot_confusion_matrix(CM, ['Normal', 'Attack'])
