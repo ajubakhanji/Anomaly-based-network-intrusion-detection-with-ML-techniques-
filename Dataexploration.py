@@ -9,11 +9,9 @@ import statistics
 traffic = get_file('kddcup.data_10_percent.gz',
                        origin='http://kdd.ics.uci.edu/databases/kddcup99/kddcup.data_10_percent.gz')
 
-#print(traffic)
 
 #################################################
 
-# The data-set can be read as a csv file, it also has no header; traffic defines the path.
 data = pd.read_csv(traffic, header = None)
 
 # Adds header to data
@@ -25,8 +23,7 @@ data.columns = ['Time', 'Prot_Type', 'Service', 'Flag', 'Src_bytes', 'Dst_bytes'
     'Dst_Host_Same_Src_Port_Rate', 'Dst_Host_Srv_Diff_Host_Rate', 'Dst_Host_Serror_Rate', 'Dst_Host_Srv_Serror_Rate',
     'Dst_Host_Rerror_Rate', 'Dst_Host_Srv_Rerror_Rate', 'Result']
 
-###################################### Categorization 1: Classes Attack, Normal
-
+###################################### Categorization 1
 #data.replace(
 #to_replace=['ipsweep.', 'portsweep.', 'nmap.', 'satan.', 'ftp_write.', 'guess_passwd.', 'imap.', 'multihop.',
 #'phf.', 'spy.', 'warezclient.', 'warezmaster.', 'buffer_overflow.', 'loadmodule.', 'perl.', 'rootkit.', 'back.',
@@ -35,7 +32,7 @@ data.columns = ['Time', 'Prot_Type', 'Service', 'Flag', 'Src_bytes', 'Dst_bytes'
 #data.replace(to_replace=['normal.'], value='Normal', inplace=True)
 #data.groupby('Result')['Result'].count()
 
-######################################## Categorization 2: Classes Normal, R2L, U2R, Probe, DOS
+######################################## Categorization 2
 
 data.replace(to_replace=['normal.'], value = 'Normal', inplace = True)
 data.replace(to_replace = ['ftp_write.', 'guess_passwd.', 'imap.', 'multihop.', 'phf.', 'spy.', 'warezclient.', 'warezmaster.'], value = 'R2LAttack', inplace = True)
@@ -51,13 +48,3 @@ par = {'axes.titlesize': '15',
 plt.rcParams.update(par)
 plt.title('Traffic distribution')
 data['Result'].value_counts().apply(np.log).plot(kind='bar')
-#plt.show()
-
-#print(data.shape) > (494021,42)
-#print(data.dtypes) > objects are: 'Prot_Type', 'Service', 'Flag' > to be encoded
-#print(data.describe())
-#print(Outcome)
-#print(data['Prot_Type'].unique())
-
-
-
