@@ -8,17 +8,12 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 import matplotlib.pyplot as plt
 import itertools
 
-####################################################
-
 traffic = get_file('kddcup.data_10_percent.gz',
                    origin='http://kdd.ics.uci.edu/databases/kddcup99/kddcup.data_10_percent.gz')
 
-#####################################################
 data = pd.read_csv(traffic, header=None)
 data.dropna(inplace=True, axis=1)
 
-# Assign column names/ header
-######################################################
 data.columns = ['Time', 'Prot_Type', 'Service', 'Flag', 'Src_bytes', 'Dst_bytes', 'Land', 'Wrong_Fragment', 'Urgent',
                 'Hot', 'Failed_Log_ins', 'Log_Ins', 'Compromised', 'root_shell', 'su_attempted', 'num_root',
                 'num_file_creations', 'num_shells',
@@ -31,8 +26,8 @@ data.columns = ['Time', 'Prot_Type', 'Service', 'Flag', 'Src_bytes', 'Dst_bytes'
                 'Dst_Host_Srv_Serror_Rate',
                 'Dst_Host_Rerror_Rate', 'Dst_Host_Srv_Rerror_Rate', 'Result']
 
-# Categorization 1: Attack Vs. Normal
-######################################################
+# Attack Vs. Normal
+
 #data.replace(
 # to_replace=['ipsweep.', 'portsweep.', 'nmap.', 'satan.', 'ftp_write.', 'guess_passwd.', 'imap.', 'multihop.',
 # 'phf.', 'spy.', 'warezclient.', 'warezmaster.', 'buffer_overflow.', 'loadmodule.', 'perl.', 'rootkit.', 'back.',
@@ -40,8 +35,7 @@ data.columns = ['Time', 'Prot_Type', 'Service', 'Flag', 'Src_bytes', 'Dst_bytes'
 #data.replace(to_replace=['normal.'], value='Normal', inplace=True)
 #data.groupby('Result')['Result'].count()
 
-#Categorization 2: Classes: Normal, R2L, U2R, Probe, DOS
-####################################################
+# Classes: Normal, R2L, U2R, Probe, DOS
 data.replace(to_replace=['normal.'], value = 'Normal', inplace = True)
 data.replace(to_replace = ['ftp_write.', 'guess_passwd.', 'imap.', 'multihop.', 'phf.', 'spy.', 'warezclient.', 'warezmaster.'], value = 'R2LAttack', inplace = True)
 data.replace(to_replace = ['buffer_overflow.', 'loadmodule.', 'perl.', 'rootkit.'], value = 'U2RAttack', inplace = True)
@@ -49,37 +43,27 @@ data.replace(to_replace = ['ipsweep.', 'portsweep.', 'nmap.', 'satan.'], value =
 data.replace(to_replace = ['back.', 'land.' , 'neptune.', 'pod.', 'smurf.', 'teardrop.'], value = 'DOSAttack', inplace = True)
 data.groupby('Result')['Result'].count()
 
-# Encoding Object data types before passing data to the classifier
-######################################################
-
 le = LabelEncoder()
 data['Prot_Type'] = le.fit_transform(data['Prot_Type'])
 data['Flag'] = le.fit_transform(data['Flag'])
 data['Service'] = le.fit_transform(data['Service'])
 
-##################################################
 X = data.copy().drop(['Result'], axis=1)
 y = data['Result']
 
-# Data splitting
 X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size=0.1, random_state=42)
 
-# Standard scaler applied to training data then training and testing are standardized with scaler
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
-# Random Forrest classifier
 RF = RandomForestClassifier().fit(X_train, Y_train)
 pred = RF.predict(X_test)
 
-
-################################################
 # ""Title: def_confusion_matrix/intrusion detection Jupyter notebook,
 #   Author: Radwan Diab,
 #   Date: 07/08/2020,
 #   Availability: https://github.com/r7sy""
-#############################################
 
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
@@ -103,12 +87,8 @@ def plot_confusion_matrix(cm, classes,
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
 
-
-###################################################
 CM = confusion_matrix(Y_test, pred)
 plot_confusion_matrix(CM, ['Normal', 'Attack'])
-#plt.show()
-
 
 AS = accuracy_score(Y_test, pred)
 print('Accuracy Score:')
