@@ -9,9 +9,6 @@ import statistics
 traffic = get_file('kddcup.data_10_percent.gz',
                        origin='http://kdd.ics.uci.edu/databases/kddcup99/kddcup.data_10_percent.gz')
 
-
-#################################################
-
 data = pd.read_csv(traffic, header = None)
 
 # Adds header to data
@@ -23,7 +20,7 @@ data.columns = ['Time', 'Prot_Type', 'Service', 'Flag', 'Src_bytes', 'Dst_bytes'
     'Dst_Host_Same_Src_Port_Rate', 'Dst_Host_Srv_Diff_Host_Rate', 'Dst_Host_Serror_Rate', 'Dst_Host_Srv_Serror_Rate',
     'Dst_Host_Rerror_Rate', 'Dst_Host_Srv_Rerror_Rate', 'Result']
 
-###################################### Categorization 1
+# Categorization 1
 #data.replace(
 #to_replace=['ipsweep.', 'portsweep.', 'nmap.', 'satan.', 'ftp_write.', 'guess_passwd.', 'imap.', 'multihop.',
 #'phf.', 'spy.', 'warezclient.', 'warezmaster.', 'buffer_overflow.', 'loadmodule.', 'perl.', 'rootkit.', 'back.',
@@ -32,7 +29,7 @@ data.columns = ['Time', 'Prot_Type', 'Service', 'Flag', 'Src_bytes', 'Dst_bytes'
 #data.replace(to_replace=['normal.'], value='Normal', inplace=True)
 #data.groupby('Result')['Result'].count()
 
-######################################## Categorization 2
+# Categorization 2
 
 data.replace(to_replace=['normal.'], value = 'Normal', inplace = True)
 data.replace(to_replace = ['ftp_write.', 'guess_passwd.', 'imap.', 'multihop.', 'phf.', 'spy.', 'warezclient.', 'warezmaster.'], value = 'R2LAttack', inplace = True)
