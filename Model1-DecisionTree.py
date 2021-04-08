@@ -56,11 +56,6 @@ X_test = scaler.transform(X_test)
 DT = DecisionTreeClassifier(criterion='gini', class_weight='balanced')
 pred = DT.fit(X_train, Y_train).predict(X_test)
 
-# ""Title: def_confusion_matrix/intrusion detection Jupyter notebook,
-#   Author: Radwan Diab,
-#   Date: 07/08/2020,
-#   Availability: https://github.com/r7sy""
-
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
                           title='Decision Tree',
