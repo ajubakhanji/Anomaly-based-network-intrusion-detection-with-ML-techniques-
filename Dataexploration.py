@@ -21,16 +21,14 @@ data.columns = ['Time', 'Prot_Type', 'Service', 'Flag', 'Src_bytes', 'Dst_bytes'
     'Dst_Host_Rerror_Rate', 'Dst_Host_Srv_Rerror_Rate', 'Result']
 
 # Categorization 1
-#data.replace(
-#to_replace=['ipsweep.', 'portsweep.', 'nmap.', 'satan.', 'ftp_write.', 'guess_passwd.', 'imap.', 'multihop.',
-#'phf.', 'spy.', 'warezclient.', 'warezmaster.', 'buffer_overflow.', 'loadmodule.', 'perl.', 'rootkit.', 'back.',
-#'land.', 'neptune.', 'pod.', 'smurf.', 'teardrop.'], value='Attack', inplace=True)
+data.replace(to_replace=['ipsweep.', 'portsweep.', 'nmap.', 'satan.', 'ftp_write.', 'guess_passwd.', 'imap.', 'multihop.',
+'phf.', 'spy.', 'warezclient.', 'warezmaster.', 'buffer_overflow.', 'loadmodule.', 'perl.', 'rootkit.', 'back.',
+'land.', 'neptune.', 'pod.', 'smurf.', 'teardrop.'], value='Attack', inplace=True)
 
-#data.replace(to_replace=['normal.'], value='Normal', inplace=True)
-#data.groupby('Result')['Result'].count()
+data.replace(to_replace=['normal.'], value='Normal', inplace=True)
+data.groupby('Result')['Result'].count()
 
 # Categorization 2
-
 data.replace(to_replace=['normal.'], value = 'Normal', inplace = True)
 data.replace(to_replace = ['ftp_write.', 'guess_passwd.', 'imap.', 'multihop.', 'phf.', 'spy.', 'warezclient.', 'warezmaster.'], value = 'R2LAttack', inplace = True)
 data.replace(to_replace = ['buffer_overflow.', 'loadmodule.', 'perl.', 'rootkit.'], value = 'U2RAttack', inplace = True)
