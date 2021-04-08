@@ -28,21 +28,20 @@ data.columns = ['Time', 'Prot_Type', 'Service', 'Flag', 'Src_bytes', 'Dst_bytes'
                 'Dst_Host_Rerror_Rate', 'Dst_Host_Srv_Rerror_Rate', 'Result']
 
 # Attack Vs. Normal
-#data.replace(
-#to_replace=['ipsweep.', 'portsweep.', 'nmap.', 'satan.', 'ftp_write.', 'guess_passwd.', 'imap.', 'multihop.','phf.',
-#'spy.', 'warezclient.', 'warezmaster.', 'buffer_overflow.', 'loadmodule.', 'perl.', 'rootkit.', 'back.',
-#'land.', 'neptune.', 'pod.', 'smurf.', 'teardrop.'], value='Attack', inplace=True)
-#data.replace(to_replace=['normal.'], value='Normal', inplace=True)
-#data.groupby('Result')['Result'].count()
+data.replace(
+to_replace=['ipsweep.', 'portsweep.', 'nmap.', 'satan.', 'ftp_write.', 'guess_passwd.', 'imap.', 'multihop.','phf.',
+'spy.', 'warezclient.', 'warezmaster.', 'buffer_overflow.', 'loadmodule.', 'perl.', 'rootkit.', 'back.',
+'land.', 'neptune.', 'pod.', 'smurf.', 'teardrop.'], value='Attack', inplace=True)
+data.replace(to_replace=['normal.'], value='Normal', inplace=True)
+data.groupby('Result')['Result'].count()
 
-#Classes: Normal, R2L, U2R, Probe, DOS
+# Normal, R2L, U2R, Probe, DOS
 data.replace(to_replace=['normal.'], value = 'Normal', inplace = True)
 data.replace(to_replace = ['ftp_write.', 'guess_passwd.', 'imap.', 'multihop.', 'phf.', 'spy.', 'warezclient.', 'warezmaster.'], value = 'R2LAttack', inplace = True)
 data.replace(to_replace = ['buffer_overflow.', 'loadmodule.', 'perl.', 'rootkit.'], value = 'U2RAttack', inplace = True)
 data.replace(to_replace = ['ipsweep.', 'portsweep.', 'nmap.', 'satan.'], value = 'ProbeAttack', inplace = True)
 data.replace(to_replace = ['back.', 'land.' , 'neptune.', 'pod.', 'smurf.', 'teardrop.'], value = 'DOSAttack', inplace = True)
 data.groupby('Result')['Result'].count()
-
 
 le = LabelEncoder()
 data['Prot_Type'] = le.fit_transform(data['Prot_Type'])
@@ -61,10 +60,6 @@ X_test = scaler.transform(X_test)
 G = GaussianNB().fit(X_train, Y_train)
 pred = G.predict(X_test)
 
-# ""Title: def_confusion_matrix/intrusion detection Jupyter notebook,
-#   Author: Radwan Diab,
-#   Date: 07/08/2020,
-#   Availability: https://github.com/r7sy""
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
                           title='Naive Bayes',
